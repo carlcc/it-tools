@@ -17,5 +17,10 @@ module.exports = {
         message: 'Please use local useCopy from src/composable/copy.ts instead of useClipboard.',
       }],
     }],
+    '@typescript-eslint/brace-style': ['off'],
+    'antfu/top-level-function': ['off'],
+    'sort-imports': ['off'],
+    'arrow-parens': ['off'],
+    'vue/html-self-closing': ['off'],
   },
 };

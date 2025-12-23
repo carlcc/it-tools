@@ -71,6 +71,10 @@ tools:
     text: '文本'
     data: '数据'
 
+  naming-style-convert:
+    title: '命名风格转换'
+    description: 不同代码命名风格之间的转换
+
   password-strength-analyser:
     title: 密码强度分析仪
     description: 使用此密码强度分析器和破解时间估计工具来发现密码的强度。
