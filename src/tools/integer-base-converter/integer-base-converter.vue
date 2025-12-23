@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue';
 import InputCopyable from '../../components/InputCopyable.vue';
-import { convertBase } from './integer-base-converter.model';
+import { convertBase, convertToBytes, convertToBytes2 } from './integer-base-converter.model';
 import { getErrorMessageIfThrows } from '@/utils/error';
 
 const inputProps = {
-  'labelPosition': 'left',
-  'labelWidth': '170px',
-  'labelAlign': 'right',
-  'readonly': true,
+  labelPosition: 'left',
+  labelWidth: '170px',
+  labelAlign: 'right',
+  readonly: true,
   'mb-2': '',
 } as const;
 
@@ -18,8 +19,23 @@ const outputBase = ref(42);
 function errorlessConvert(...args: Parameters<typeof convertBase>) {
   try {
     return convertBase(...args);
+  } catch (err) {
+    return '';
   }
-  catch (err) {
+}
+
+function errorlessConvertToBytes(...args: Parameters<typeof convertToBytes>) {
+  try {
+    return convertToBytes(...args);
+  } catch (err) {
+    return '';
+  }
+}
+
+function errorlessConvertToBytes2(...args: Parameters<typeof convertToBytes>) {
+  try {
+    return convertToBytes2(...args);
+  } catch (err) {
     return '';
   }
 }
@@ -34,10 +50,24 @@ const error = computed(() =>
 <template>
   <div>
     <c-card>
-      <c-input-text v-model:value="input" label="Input number" placeholder="Put your number here (ex: 42)" label-position="left" label-width="110px" mb-2 label-align="right" />
+      <c-input-text
+        v-model:value="input"
+        label="Input number"
+        placeholder="Put your number here (ex: 42)"
+        label-position="left"
+        label-width="110px"
+        mb-2
+        label-align="right"
+      />
 
       <n-form-item label="Input base" label-placement="left" label-width="110" :show-feedback="false">
-        <n-input-number v-model:value="inputBase" max="64" min="2" placeholder="Put your input base here (ex: 10)" w-full />
+        <n-input-number
+          v-model:value="inputBase"
+          max="64"
+          min="2"
+          placeholder="Put your input base here (ex: 10)"
+          w-full
+        />
       </n-form-item>
 
       <n-alert v-if="error" style="margin-top: 25px" type="error">
@@ -93,6 +123,62 @@ const error = computed(() =>
           :placeholder="`Base ${outputBase} will be here...`"
         />
       </div>
+
+      <n-divider />
+      <n-h2 style="margin-top: 20px">Bytes Representation (2's Complement)</n-h2>
+      <!-- 1 Byte -->
+      <InputCopyable
+        label="Byte (8bit, 16)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes({ value: input, fromBase: inputBase, byteSize: 1 })"
+        placeholder="Byte version will be here..."
+      />
+      <InputCopyable
+        label="Byte (8bit, 2)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes2({ value: input, fromBase: inputBase, byteSize: 1 })"
+        placeholder="Byte version will be here..."
+      />
+
+      <!-- 2 Byte -->
+      <InputCopyable
+        label="Word (16)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes({ value: input, fromBase: inputBase, byteSize: 2 })"
+        placeholder="Word version will be here..."
+      />
+      <InputCopyable
+        label="Word (2)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes2({ value: input, fromBase: inputBase, byteSize: 2 })"
+        placeholder="Word version will be here..."
+      />
+      <!-- 4 Byte -->
+      <InputCopyable
+        label="DWord (32bit, 16)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes({ value: input, fromBase: inputBase, byteSize: 4 })"
+        placeholder="DWord version will be here..."
+      />
+      <InputCopyable
+        label="DWord (32bit, 2)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes2({ value: input, fromBase: inputBase, byteSize: 4 })"
+        placeholder="DWord version will be here..."
+      />
+      <!-- 8 Byte -->
+      <InputCopyable
+        label="QWord (64bit, 16)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes({ value: input, fromBase: inputBase, byteSize: 8 })"
+        placeholder="QWord version will be here..."
+      />
+      <InputCopyable
+        label="QWord (64bit, 16)"
+        v-bind="inputProps"
+        :value="errorlessConvertToBytes2({ value: input, fromBase: inputBase, byteSize: 8 })"
+        placeholder="QWord version will be here..."
+      />
     </c-card>
   </div>
 </template>

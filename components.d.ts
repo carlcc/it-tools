@@ -142,6 +142,7 @@ declare module 'vue' {
     NamingStyleConvert: typeof import('./src/tools/naming-style-convert/naming-style-convert.vue')['default']
     NavbarButtons: typeof import('./src/components/NavbarButtons.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NCode: typeof import('naive-ui')['NCode']
     NCollapseTransition: typeof import('naive-ui')['NCollapseTransition']
