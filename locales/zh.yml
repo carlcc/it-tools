@@ -73,7 +73,7 @@ tools:
 
   naming-style-convert:
     title: '命名风格转换'
-    description: 不同代码命名风格之间的转换
+    description: 变量、函数在不同代码命名风格之间的转换
 
   password-strength-analyser:
     title: 密码强度分析仪
